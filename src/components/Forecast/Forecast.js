@@ -7,18 +7,35 @@ import forecastStyle from './style';
 
 export default function Forecast() {
   const classes = forecastStyle();
+  const [loading, setLoading] = React.useState(true);
+  const [city, setCity] = React.useState(getCity('mariupol'));
 
-  const data = getCity('mariupol');
+  // const city = getCity('mariupol');
 
-  // console.log('data: ', data.weather);
+  // React.useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       setCity(getCity('mariupol'));
+  //       setLoading(true);
+  //     } catch (error) {
+  //       console.log('error ', error);
+  //     }
+  //   })();
+  // }, [loading]);
+
+  console.log('city: ', city);
 
   return (
     <Paper className={classes.root} variant='outlined'>
-      <Typography variant='h5'>18 C</Typography>
-      <Typography variant='h6'>Mariupol</Typography>
-      <Typography variant='subtitle1'>
-        Clear, Wind - 2.77 meter per second
-      </Typography>
+      {loading && (
+        <>
+          <Typography variant='h5'>18 C</Typography>
+          <Typography variant='h6'>{city.name}</Typography>
+          <Typography variant='subtitle1'>
+            {city.sky}, Wind - {(city.wind || {}).speed} meter per second
+          </Typography>
+        </>
+      )}
     </Paper>
   );
 }
