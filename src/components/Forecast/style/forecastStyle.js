@@ -7,7 +7,14 @@ const forecastStyle = makeStyles((theme) => ({
     alignItems: 'center',
     marginTop: 50,
     padding: 20
+  },
+  tempWrapper: {
+    display: 'flex',
+    alignItems: 'center'
   }
+  // weatherIcon: {
+  //   width: 50
+  // }
 }));
 
 export default forecastStyle;

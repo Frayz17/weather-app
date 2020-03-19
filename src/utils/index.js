@@ -1,3 +1,4 @@
 import convertFC from './convertFC';
+import windSpeedEquiv from './windSpeedEquiv';
 
-export { convertFC };
+export { convertFC, windSpeedEquiv };

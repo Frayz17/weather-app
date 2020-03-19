@@ -1,6 +1,9 @@
 import React from 'react';
 import { getCity } from 'services/requests/index';
+import { windSpeedEquiv } from 'utils';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import WeatherIcon from 'components/WeatherIcon';
 import Typography from '@material-ui/core/Typography';
 import forecastStyle from './style';
 
@@ -21,10 +24,20 @@ export default function Forecast() {
     <Paper className={classes.root} variant='outlined'>
       {city && (
         <>
-          <Typography variant='h5'>{Math.round(city.temp)}°C</Typography>
+          <Box className={classes.tempWrapper}>
+            <WeatherIcon icon={city.weather[0].icon} width={50} />
+            <Typography variant='h5'>{Math.round(city.main.temp)}°C</Typography>
+          </Box>
           <Typography variant='h6'>{city.name}</Typography>
           <Typography variant='subtitle1'>
-            {city.sky}, Wind - {(city.wind || {}).speed} meter per second
+            {city.sky}Wind - {(city.wind || {}).speed} m/s,{' '}
+            {windSpeedEquiv((city.wind || {}).speed)}
+          </Typography>
+          <Typography variant='subtitle1'>
+            Sunrise - {city.sys.sunrise}
+          </Typography>
+          <Typography variant='subtitle1'>
+            Sunset - {city.sys.sunset}
           </Typography>
         </>
       )}
