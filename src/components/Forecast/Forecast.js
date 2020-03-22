@@ -1,6 +1,6 @@
 import React from 'react';
 import { getCity } from 'services/requests/index';
-import { windSpeedEquiv } from 'utils';
+import { windSpeedEquiv, getTime } from 'utils';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import WeatherIcon from 'components/WeatherIcon';
@@ -20,6 +20,10 @@ export default function Forecast() {
 
   console.log('city: ', city);
 
+  if (city !== null) {
+    console.log('timezone: ', city.timezone);
+  }
+
   return (
     <Paper className={classes.root} variant='outlined'>
       {city && (
@@ -34,10 +38,10 @@ export default function Forecast() {
             {windSpeedEquiv((city.wind || {}).speed)}
           </Typography>
           <Typography variant='subtitle1'>
-            Sunrise - {city.sys.sunrise}
+            Sunrise - {getTime(city.sys.sunrise)}
           </Typography>
           <Typography variant='subtitle1'>
-            Sunset - {city.sys.sunset}
+            Sunset - {getTime(city.sys.sunset)}
           </Typography>
         </>
       )}
