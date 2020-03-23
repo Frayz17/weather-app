@@ -20,10 +20,6 @@ export default function Forecast() {
 
   console.log('city: ', city);
 
-  if (city !== null) {
-    console.log('timezone: ', city.timezone);
-  }
-
   return (
     <Paper className={classes.root} variant='outlined'>
       {city && (

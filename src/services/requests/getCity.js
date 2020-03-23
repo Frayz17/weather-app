@@ -6,16 +6,6 @@ const getCity = async (city) => {
 
   const result = await axios(cityStrQuery);
 
-  // const { sea_level, grnd_level, ...weatherData } = result.data.main;
-  // const data = {
-  //   name: result.data.name,
-  //   weather: result.data.weather[0],
-  //   wind: result.data.wind,
-  //   ...weatherData
-  // };
-
-  console.log(result.data);
-
   return result.data;
 };
 
