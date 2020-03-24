@@ -1,7 +1,9 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Forecast from 'components/Forecast';
+import CityList from 'components/CityList';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import Forecast from 'components/Forecast';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,8 +11,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import './style/globalStyle.css';
 import appStyle from './style';
-
-import City from 'components/City';
+import 'typeface-roboto';
 
 // import grey from '@material-ui/core/colors/grey';
 // const theme = createMuiTheme({
@@ -33,10 +34,12 @@ function App() {
       <CssBaseline />
       <Header />
       <Container style={{ flexGrow: 1 }}>
-        <Forecast />
-        <Box style={{ padding: 50 }}>
-          <City />
-        </Box>
+        <Switch>
+          <Route exact path={'/'}>
+            <Forecast />
+            <CityList />
+          </Route>
+        </Switch>
       </Container>
       <Footer />
       {/* </ThemeProvider> */}

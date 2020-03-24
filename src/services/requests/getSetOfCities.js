@@ -1,20 +1,14 @@
 import axios from 'axios';
 import key from 'services/requests/key.js';
 
-const getSetOfCities = async (city) => {
-  const cityStrQuery = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`;
+const getSetOfCities = async (citiesID) => {
+  const cityStrQuery = `http://api.openweathermap.org/data/2.5/group?id=524901,703448,2643743&units=metric&appid=${key}`;
 
   const result = await axios(cityStrQuery);
-  const { sea_level, grnd_level, ...weatherData } = result.data.main;
 
-  const data = {
-    name: result.data.name,
-    sky: result.data.weather[0].main,
-    wind: result.data.wind,
-    ...weatherData
-  };
+  console.log(result.data);
 
-  return data;
+  return result.data;
 };
 
 export default getSetOfCities;
