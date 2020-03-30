@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Forecast from 'components/Forecast';
-import CityList from 'components/CityList';
+import Home from 'routes/Home';
+import Today from 'routes/Today';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -36,8 +36,10 @@ function App() {
       <Container style={{ flexGrow: 1 }}>
         <Switch>
           <Route exact path={'/'}>
-            <Forecast />
-            <CityList />
+            <Home />
+          </Route>
+          <Route exact path={'/today'}>
+            <Today />
           </Route>
         </Switch>
       </Container>

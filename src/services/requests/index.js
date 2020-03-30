@@ -1,4 +1,4 @@
 import getCity from './getCity';
-import getSetOfCities from './getSetOfCities';
+import getListOfCities from './getListOfCities';
 
-export { getCity, getSetOfCities };
+export { getCity, getListOfCities };
