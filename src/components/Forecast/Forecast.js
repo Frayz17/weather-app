@@ -18,43 +18,47 @@ export default connect((state) => {
     lon: state.currentPosition.lon,
     didWeatherLoad: !isObjEmpty(state.weatherToday)
   };
-})(function Forecast({ lat, lon, didWeatherLoad }) {
-  const classes = forecastStyle();
-  const forecast = getState().weatherToday;
+})(
+  React.memo(function Forecast({ lat, lon, didWeatherLoad }) {
+    const classes = forecastStyle();
+    const forecast = getState().weatherToday;
 
-  React.useEffect(() => {
-    setCurrentPosition();
-    if (lat !== null && lon !== null)
-      (async () => {
-        const data = await getWeatherByGeoLocation(lat, lon);
-        setWeatherToday(data);
-      })();
-  }, [lat, lon]);
+    React.useEffect(() => {
+      if (lat !== null && lon !== null) {
+        (async () => {
+          const data = await getWeatherByGeoLocation(lat, lon);
+          setWeatherToday(data);
+        })();
+      } else {
+        setCurrentPosition();
+      }
+    }, [lat, lon]);
 
-  return (
-    <Paper className={classes.root} variant='outlined'>
-      {didWeatherLoad && (
-        <>
-          <WeatherTemp
-            temp={forecast.main.temp}
-            icon={forecast.weather[0].icon}
-            width={50}
-            TypoStyle={'h5'}
-          />
+    return (
+      <Paper className={classes.root} variant='outlined'>
+        {didWeatherLoad && (
+          <>
+            <WeatherTemp
+              temp={forecast.main.temp}
+              icon={forecast.weather[0].icon}
+              width={50}
+              TypoStyle={'h5'}
+            />
 
-          <Typography variant='h6'>{forecast.name}</Typography>
-          <Typography variant='subtitle1'>
-            {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s -{' '}
-            {windSpeedEquiv((forecast.wind || {}).speed)}
-          </Typography>
-          <Typography variant='subtitle1'>
-            Sunrise - {getTime(forecast.sys.sunrise)}
-          </Typography>
-          <Typography variant='subtitle1'>
-            Sunset - {getTime(forecast.sys.sunset)}
-          </Typography>
-        </>
-      )}
-    </Paper>
-  );
-});
+            <Typography variant='h6'>{forecast.name}</Typography>
+            <Typography variant='subtitle1'>
+              {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s -{' '}
+              {windSpeedEquiv((forecast.wind || {}).speed)}
+            </Typography>
+            <Typography variant='subtitle1'>
+              Sunrise - {getTime(forecast.sys.sunrise)}
+            </Typography>
+            <Typography variant='subtitle1'>
+              Sunset - {getTime(forecast.sys.sunset)}
+            </Typography>
+          </>
+        )}
+      </Paper>
+    );
+  })
+);

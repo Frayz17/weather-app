@@ -47,9 +47,9 @@ export default function SearchAppBar() {
             <Button
               className={classes.title}
               component={RouterLink}
-              to={'/week'}
+              to={'/fivedays'}
             >
-              Week
+              Five days
             </Button>
             <div className={classes.search}>
               <div className={classes.searchIcon}>

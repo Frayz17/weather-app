@@ -3,10 +3,9 @@ import ForecastList from 'components/ForecastList';
 
 export default function Today() {
   const range = {
-    start: 0,
-    end: 7
+    start: 8,
+    end: 15
   };
-
   return (
     <>
       <ForecastList range={range} />

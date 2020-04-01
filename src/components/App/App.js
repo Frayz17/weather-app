@@ -1,17 +1,17 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from 'routes/Home';
-import Today from 'routes/Today';
+import WeatherForecast from 'modules/WeatherForecast';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import './style/globalStyle.css';
 import appStyle from './style';
 import 'typeface-roboto';
+// import { createMuiTheme } from '@material-ui/core/styles';
+// import { ThemeProvider } from '@material-ui/styles';
 
 // import grey from '@material-ui/core/colors/grey';
 // const theme = createMuiTheme({
@@ -38,8 +38,8 @@ function App() {
           <Route exact path={'/'}>
             <Home />
           </Route>
-          <Route exact path={'/today'}>
-            <Today />
+          <Route exact path={['/today', '/tomorrow', '/fivedays']}>
+            <WeatherForecast />
           </Route>
         </Switch>
       </Container>
