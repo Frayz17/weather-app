@@ -5,12 +5,11 @@ import { setWeatherToday } from 'services/Store/reducers/weatherToday';
 import getWeatherByGeoLocation from 'services/requests/getWeatherByGeoLocation';
 import setCurrentPosition from 'services/Store/reducers/currentPosition/setCurrentPosition';
 import windSpeedEquiv from 'utils/windSpeedEquiv';
-import getTime from 'utils/getTime';
 import isObjEmpty from 'utils/isObjEmpty';
 import Paper from '@material-ui/core/Paper';
 import WeatherTemp from 'components/WeatherTemp';
 import Typography from '@material-ui/core/Typography';
-import forecastStyle from './style';
+import currentWeatherStyle from './style/currentWeatherStyle';
 
 export default connect((state) => {
   return {
@@ -19,12 +18,14 @@ export default connect((state) => {
     didWeatherLoad: !isObjEmpty(state.weatherToday)
   };
 })(
-  React.memo(function Forecast({ lat, lon, didWeatherLoad }) {
-    const classes = forecastStyle();
+  React.memo(({ lat, lon, didWeatherLoad, windInfoFlag }) => {
+    const classes = currentWeatherStyle();
     const forecast = getState().weatherToday;
+    console.log((forecast.sys || {}).country);
+    const countryCode = (forecast.sys || {}).country;
 
     React.useEffect(() => {
-      if (lat !== null && lon !== null) {
+      if (lat !== null && lon !== null && didWeatherLoad) {
         (async () => {
           const data = await getWeatherByGeoLocation(lat, lon);
           setWeatherToday(data);
@@ -32,7 +33,7 @@ export default connect((state) => {
       } else {
         setCurrentPosition();
       }
-    }, [lat, lon]);
+    }, [lat, lon, didWeatherLoad]);
 
     return (
       <Paper className={classes.root} variant='outlined'>
@@ -45,17 +46,16 @@ export default connect((state) => {
               TypoStyle={'h5'}
             />
 
-            <Typography variant='h6'>{forecast.name}</Typography>
-            <Typography variant='subtitle1'>
-              {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s -{' '}
-              {windSpeedEquiv((forecast.wind || {}).speed)}
+            <Typography variant='h6'>
+              {forecast.name}, {countryCode}
             </Typography>
-            <Typography variant='subtitle1'>
-              Sunrise - {getTime(forecast.sys.sunrise)}
-            </Typography>
-            <Typography variant='subtitle1'>
-              Sunset - {getTime(forecast.sys.sunset)}
-            </Typography>
+
+            {windInfoFlag && (
+              <Typography variant='subtitle1'>
+                {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s -{' '}
+                {windSpeedEquiv((forecast.wind || {}).speed)}
+              </Typography>
+            )}
           </>
         )}
       </Paper>

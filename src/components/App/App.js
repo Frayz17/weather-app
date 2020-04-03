@@ -1,7 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Home from 'routes/Home';
-import WeatherForecast from 'modules/WeatherForecast';
+import MainPanel from 'modules/MainPanel';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import './style/globalStyle.css';
 import appStyle from './style';
 import 'typeface-roboto';
+
 // import { createMuiTheme } from '@material-ui/core/styles';
 // import { ThemeProvider } from '@material-ui/styles';
 
@@ -34,14 +33,7 @@ function App() {
       <CssBaseline />
       <Header />
       <Container style={{ flexGrow: 1 }}>
-        <Switch>
-          <Route exact path={'/'}>
-            <Home />
-          </Route>
-          <Route exact path={['/today', '/tomorrow', '/fivedays']}>
-            <WeatherForecast />
-          </Route>
-        </Switch>
+        <MainPanel />
       </Container>
       <Footer />
       {/* </ThemeProvider> */}

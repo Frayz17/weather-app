@@ -27,8 +27,9 @@ export default function City({ name, temp, windSpeed, weather, weatherIcon }) {
               TypoStyle={'subtitle1'}
             />
 
+            <Typography variant='body2'>{weather}</Typography>
             <Typography variant='body2'>
-              {weather}, {wind} m/s - {windSpeedEquiv(wind)}
+              {wind} m/s - {windSpeedEquiv(wind)}
             </Typography>
           </Paper>
         </CardContent>

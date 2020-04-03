@@ -1,11 +1,11 @@
 import React from 'react';
-import Forecast from 'components/Forecast';
+import CurrentWeather from 'components/CurrentWeather';
 import CityList from 'components/CityList';
 
 export default () => {
   return (
     <>
-      <Forecast />
+      <CurrentWeather windInfoFlag={true} />
       <CityList />
     </>
   );

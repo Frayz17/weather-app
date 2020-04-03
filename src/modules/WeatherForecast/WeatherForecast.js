@@ -8,7 +8,6 @@ import isObjEmpty from 'utils/isObjEmpty';
 import Today from 'routes/Today';
 import Tomorrow from 'routes/Tomorrow';
 import FiveDays from 'routes/FiveDays';
-import LocationInfo from 'components/LocationInfo';
 
 export default connect((state) => {
   return {
