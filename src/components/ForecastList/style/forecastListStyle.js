@@ -6,10 +6,12 @@ const forecastStyle = makeStyles((theme) => ({
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-
-    marginTop: 50,
-    padding: 20
-  }
+    minWidth: 410,
+    padding: 15,
+  },
+  locationWrapper: {
+    marginBottom: 20,
+  },
 }));
 
 export default forecastStyle;

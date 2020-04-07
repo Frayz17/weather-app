@@ -1,7 +1,7 @@
 import React from 'react';
 import windSpeedEquiv from 'utils/windSpeedEquiv';
 import getTime from 'utils/getTime';
-import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
 import WeatherTemp from 'components/WeatherTemp';
 import Typography from '@material-ui/core/Typography';
 import hourlyForecastStyle from './style';
@@ -16,24 +16,33 @@ export default React.memo(({ forecast, locationName }) => {
   const clouds = forecast.weather[0].description;
 
   return (
-    <Paper className={classes.root} variant='outlined'>
-      <Typography variant='h6'>{locationName}</Typography>
+    <Box className={classes.root} variant='outlined'>
+      <Typography variant='subtitle1' className={classes.time}>
+        {time}
+      </Typography>
 
-      <Typography variant='h6'>{time}</Typography>
-      <Typography variant='subtitle1'>{date}</Typography>
+      {/* <Typography className={classes.weather} variant='subtitle1'>
+        {date}
+      </Typography> */}
 
-      <WeatherTemp
-        temp={forecast.main.temp}
-        icon={forecast.weather[0].icon}
-        width={50}
-        TypoStyle={'h6'}
-      />
+      <Box className={classes.temp}>
+        <WeatherTemp
+          temp={forecast.main.temp}
+          icon={forecast.weather[0].icon}
+          width={25}
+          TypoStyle={'subtitle1'}
+        />
+      </Box>
 
-      <Typography variant='subtitle1'>{clouds}</Typography>
+      <Typography className={classes.weather} variant='subtitle1'>
+        {clouds}
+      </Typography>
 
-      <Typography variant='subtitle1'>{windSpeed} m/s</Typography>
+      <Typography className={classes.weather} variant='subtitle1'>
+        {windSpeed} m/s
+      </Typography>
 
       <Typography variant='subtitle1'>{windSpeedEquiv(windSpeed)}</Typography>
-    </Paper>
+    </Box>
   );
 });

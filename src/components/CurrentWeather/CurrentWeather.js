@@ -15,13 +15,12 @@ export default connect((state) => {
   return {
     lat: state.currentPosition.lat,
     lon: state.currentPosition.lon,
-    didWeatherLoad: !isObjEmpty(state.weatherToday)
+    didWeatherLoad: !isObjEmpty(state.weatherToday),
   };
 })(
   React.memo(({ lat, lon, didWeatherLoad, windInfoFlag }) => {
     const classes = currentWeatherStyle();
     const forecast = getState().weatherToday;
-    console.log((forecast.sys || {}).country);
     const countryCode = (forecast.sys || {}).country;
 
     React.useEffect(() => {
