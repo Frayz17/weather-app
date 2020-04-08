@@ -13,7 +13,7 @@ export default React.memo(({ forecast, locationName }) => {
   const time = getTime(forecast.dt, 'minutes');
   const date = getTime(forecast.dt, 'day and month');
   const windSpeed = roundNumber(forecast.wind.speed);
-  const clouds = forecast.weather[0].description;
+  const clouds = forecast.weather[0].main;
 
   return (
     <Box className={classes.root} variant='outlined'>
@@ -21,9 +21,9 @@ export default React.memo(({ forecast, locationName }) => {
         {time}
       </Typography>
 
-      {/* <Typography className={classes.weather} variant='subtitle1'>
+      <Typography className={classes.weather} variant='subtitle1'>
         {date}
-      </Typography> */}
+      </Typography>
 
       <Box className={classes.temp}>
         <WeatherTemp

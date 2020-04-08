@@ -1,4 +1,5 @@
 import { getStore } from 'services/Store';
+import sliceForecastByDays from './sliceForecastByDays';
 
 const WEATHER_FIVE_DAYS_SET = 'WEATHER_FIVE_DAYS_SET';
 const WEATHER_FIVE_DAYS_UNSET = 'WEATHER_FIVE_DAYS_UNSET';
@@ -6,7 +7,8 @@ const WEATHER_FIVE_DAYS_UNSET = 'WEATHER_FIVE_DAYS_UNSET';
 export default (state = {}, action) => {
   switch (action.type) {
     case WEATHER_FIVE_DAYS_SET:
-      return { ...action.payload };
+      const listByDays = sliceForecastByDays(action.payload.list);
+      return { listByDays, ...action.payload };
     case WEATHER_FIVE_DAYS_UNSET:
       return {};
 
@@ -18,7 +20,7 @@ export default (state = {}, action) => {
 function setWeatherFiveDays(payload) {
   getStore().dispatch({
     type: WEATHER_FIVE_DAYS_SET,
-    payload
+    payload,
   });
 }
 
