@@ -14,12 +14,14 @@ export default connect((state) => {
     const classes = CityListStyle();
     const citiesList = getState().citiesList;
 
+    console.log(citiesList);
+
     React.useEffect(() => {
       (async () => {
         const Cities = await getListOfCities('701822,2172797');
         citiesListSet(Cities);
       })();
-    }, []);
+    }, [citiesNumber]);
 
     return (
       <Paper className={classes.root} elevation={0}>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Navigation from './Navigation';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -27,30 +28,9 @@ export default function SearchAppBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Button className={classes.title} component={RouterLink} to={'/'}>
-              Home
-            </Button>
-            <Button
-              className={classes.title}
-              component={RouterLink}
-              to={'/today'}
-            >
-              Today
-            </Button>
-            <Button
-              className={classes.title}
-              component={RouterLink}
-              to={'/tomorrow'}
-            >
-              Tomorrow
-            </Button>
-            <Button
-              className={classes.title}
-              component={RouterLink}
-              to={'/fivedays'}
-            >
-              Five days
-            </Button>
+
+            <Navigation />
+
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon style={{ color: grey[700] }} />
@@ -59,7 +39,7 @@ export default function SearchAppBar() {
                 placeholder='Search…'
                 classes={{
                   root: classes.inputRoot,
-                  input: classes.inputInput
+                  input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />

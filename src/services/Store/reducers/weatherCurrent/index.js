@@ -1,4 +1,4 @@
-import { setWeatherCurrent } from './weatherCurrent';
+import { setWeatherCurrentByPosition } from './weatherCurrent';
 export { default } from './weatherCurrent';
 
-export { setWeatherCurrent };
+export { setWeatherCurrentByPosition };

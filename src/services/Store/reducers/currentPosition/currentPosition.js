@@ -4,7 +4,7 @@ const CURRENT_POSITION_UPDATE = 'CURRENT_POSITION_UPDATE';
 export default (
   state = {
     lat: null,
-    lon: null
+    lon: null,
   },
   action
 ) => {
@@ -18,3 +18,11 @@ export default (
 };
 
 export { CURRENT_POSITION_SET, CURRENT_POSITION_UPDATE };
+
+// state = {
+//   byCoord: {
+//     lat: null,
+//     lon: null,
+//   },
+//   byCity: {},
+// },

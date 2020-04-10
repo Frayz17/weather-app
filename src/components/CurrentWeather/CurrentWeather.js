@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getState } from 'services/Store';
-import { setWeatherCurrent } from 'services/Store/reducers/weatherCurrent';
+import { useParams, useLocation, useRouteMatch } from 'react-router-dom';
+import { setWeatherCurrentByPosition } from 'services/Store/reducers/weatherCurrent';
 import getWeatherByGeoLocation from 'services/requests/getWeatherByGeoLocation';
 import setCurrentPosition from 'services/Store/reducers/currentPosition/setCurrentPosition';
 import windSpeedEquiv from 'utils/windSpeedEquiv';
@@ -15,13 +16,18 @@ export default connect((state) => {
   return {
     lat: state.currentPosition.lat,
     lon: state.currentPosition.lon,
-    didWeatherLoad: !isObjEmpty(state.weatherCurrent),
+    didWeatherLoad: !isObjEmpty(state.weatherCurrent.byPosition),
   };
 })(
   React.memo(({ lat, lon, didWeatherLoad, windInfoFlag }) => {
     const classes = currentWeatherStyle();
-    const forecast = getState().weatherCurrent;
+    const forecast = getState().weatherCurrent.byPosition;
     const countryCode = (forecast.sys || {}).country;
+
+    // const location = useLocation();
+    // const match = useRouteMatch();
+    // console.log(match);
+    // console.log(location);
 
     // TODO: fixed duplicated func in MainPanel
     React.useEffect(() => {
@@ -29,7 +35,7 @@ export default connect((state) => {
         if (lat !== null && lon !== null) {
           (async () => {
             const data = await getWeatherByGeoLocation(lat, lon);
-            setWeatherCurrent(data);
+            setWeatherCurrentByPosition(data);
           })();
         } else {
           setCurrentPosition();

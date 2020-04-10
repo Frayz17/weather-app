@@ -7,9 +7,11 @@ const cityStyle = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: 5,
-    margin: 5
+    margin: 5,
   },
-  btn: {}
+  link: {
+    textDecoration: 'none',
+  },
 }));
 
 export default cityStyle;
