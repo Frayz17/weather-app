@@ -21,7 +21,7 @@ export default function Map({ coord }) {
       <Map
         style={mapOptions.street}
         containerStyle={{
-          height: '500px',
+          height: '50vh',
           width: '100%',
         }}
         center={[coord.lon, coord.lat]}

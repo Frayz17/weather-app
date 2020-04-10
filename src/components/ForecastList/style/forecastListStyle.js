@@ -6,8 +6,18 @@ const forecastStyle = makeStyles((theme) => ({
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    minWidth: 410,
+    minWidth: 450,
     padding: 15,
+    marginBottom: 3,
+
+    '&&:last-of-type': {
+      marginBottom: 0,
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      minWidth: 'unset',
+    },
   },
   locationWrapper: {
     marginBottom: 20,

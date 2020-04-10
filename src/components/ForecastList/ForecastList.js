@@ -15,7 +15,6 @@ export default React.memo(function ForecastList({
   return (
     <Paper className={classes.root} variant='outlined'>
       <Box className={classes.locationWrapper}>
-        <Typography variant={'h4'}>{locationName}</Typography>
         <Typography variant={'h6'}>{date}</Typography>
       </Box>
 

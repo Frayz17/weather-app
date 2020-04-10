@@ -7,11 +7,11 @@ import {
   StoreProvider,
   citiesList,
   currentPosition,
-  weatherToday,
-  weatherFiveDays
+  weatherCurrent,
+  weatherFiveDays,
 } from 'services/Store';
 
-newStore({ citiesList, currentPosition, weatherToday, weatherFiveDays });
+newStore({ citiesList, currentPosition, weatherCurrent, weatherFiveDays });
 
 ReactDOM.render(
   <StoreProvider>

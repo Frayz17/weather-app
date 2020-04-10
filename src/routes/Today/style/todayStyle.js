@@ -5,11 +5,6 @@ const todayStyle = makeStyles((theme) => {
     flexWrapper: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: 30,
-
-      [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-      },
     },
   };
 });

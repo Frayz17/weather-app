@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import setCurrentPosition from 'services/Store/reducers/currentPosition/setCurrentPosition';
 import isObjEmpty from 'utils/isObjEmpty';
-import { setWeatherToday } from 'services/Store/reducers/weatherToday';
+import { setWeatherCurrent } from 'services/Store/reducers/weatherCurrent';
 import getWeatherByGeoLocation from 'services/requests/getWeatherByGeoLocation';
 import Home from 'routes/Home';
 import WeatherForecast from 'modules/WeatherForecast';
@@ -12,7 +12,7 @@ export default connect((state) => {
   return {
     lat: state.currentPosition.lat,
     lon: state.currentPosition.lon,
-    didWeatherLoad: !isObjEmpty(state.weatherToday)
+    didWeatherLoad: !isObjEmpty(state.weatherCurrent),
   };
 })(({ lat, lon, didWeatherLoad }) => {
   React.useEffect(() => {
@@ -20,7 +20,7 @@ export default connect((state) => {
       if (lat !== null && lon !== null) {
         (async () => {
           const data = await getWeatherByGeoLocation(lat, lon);
-          setWeatherToday(data);
+          setWeatherCurrent(data);
         })();
       } else {
         setCurrentPosition();
