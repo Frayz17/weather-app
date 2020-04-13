@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getState } from 'services/Store';
 import { citiesListSet } from 'services/Store/reducers/citiesList';
 import City from 'components/City';
-import { getListOfCities } from 'services/requests';
+import getListOfCities from 'services/requests/getListOfCities';
 import Paper from '@material-ui/core/Paper';
 import CityListStyle from './style/CityListStyle';
 
@@ -14,13 +14,14 @@ export default connect((state) => {
     const classes = CityListStyle();
     const citiesList = getState().citiesList;
 
-    console.log(citiesList);
-
     React.useEffect(() => {
-      (async () => {
-        const Cities = await getListOfCities('701822,2172797');
-        citiesListSet(Cities);
-      })();
+      if (citiesNumber === 0) {
+        (async () => {
+          console.log('CitiesList______USEEFFECT ASYNC');
+          const Cities = await getListOfCities('701822,2172797,636465,636804');
+          citiesListSet(Cities);
+        })();
+      }
     }, [citiesNumber]);
 
     return (

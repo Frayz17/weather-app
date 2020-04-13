@@ -3,6 +3,7 @@ import citiesList from './reducers/citiesList';
 import currentPosition from './reducers/currentPosition';
 import weatherCurrent from './reducers/weatherCurrent';
 import weatherFiveDays from './reducers/weatherFiveDays';
+import currentCity from './reducers/currentCity';
 
 import StoreProvider from './StoreProvider';
 
@@ -15,4 +16,5 @@ export {
   currentPosition,
   weatherCurrent,
   weatherFiveDays,
+  currentCity,
 };

@@ -1,27 +1,32 @@
-import { getStore } from 'services/Store';
 import sliceForecastByDays from './sliceForecastByDays';
 
-const WEATHER_FIVE_DAYS_SET = 'WEATHER_FIVE_DAYS_SET';
-const WEATHER_FIVE_DAYS_UNSET = 'WEATHER_FIVE_DAYS_UNSET';
+const WEATHER_FIVE_DAYS_SET_BY_POSITION = 'WEATHER_FIVE_DAYS_SET_BY_POSITION';
+const WEATHER_FIVE_DAYS_SET_BY_CITY = 'WEATHER_FIVE_DAYS_SET_BY_CITY';
 
-export default (state = {}, action) => {
+export default (
+  state = {
+    byPosition: {},
+    byCity: {},
+  },
+  action
+) => {
   switch (action.type) {
-    case WEATHER_FIVE_DAYS_SET:
-      const listByDays = sliceForecastByDays(action.payload.list);
-      return { listByDays, ...action.payload };
-    case WEATHER_FIVE_DAYS_UNSET:
-      return {};
+    case WEATHER_FIVE_DAYS_SET_BY_POSITION:
+      const listByDaysPosition = sliceForecastByDays(action.payload.list);
+      return {
+        ...state,
+        byPosition: { listByDays: listByDaysPosition, ...action.payload },
+      };
+    case WEATHER_FIVE_DAYS_SET_BY_CITY:
+      const listByDaysCity = sliceForecastByDays(action.payload.list);
+      return {
+        ...state,
+        byCity: { listByDays: listByDaysCity, ...action.payload },
+      };
 
     default:
       return { ...state };
   }
 };
 
-function setWeatherFiveDays(payload) {
-  getStore().dispatch({
-    type: WEATHER_FIVE_DAYS_SET,
-    payload,
-  });
-}
-
-export { WEATHER_FIVE_DAYS_SET, WEATHER_FIVE_DAYS_UNSET, setWeatherFiveDays };
+export { WEATHER_FIVE_DAYS_SET_BY_POSITION, WEATHER_FIVE_DAYS_SET_BY_CITY };

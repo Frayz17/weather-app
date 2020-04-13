@@ -1,6 +1,7 @@
 import weatherFiveDays from './weatherFiveDays';
-import { setWeatherFiveDays } from './weatherFiveDays';
+import setWeatherFiveDaysByCity from './setWeatherFiveDaysByCity';
+import setWeatherFiveDaysByPosition from './setWeatherFiveDaysByPosition';
 
 export default weatherFiveDays;
 
-export { setWeatherFiveDays };
+export { setWeatherFiveDaysByCity, setWeatherFiveDaysByPosition };

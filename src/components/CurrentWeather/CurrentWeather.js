@@ -1,72 +1,110 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getState } from 'services/Store';
-import { useParams, useLocation, useRouteMatch } from 'react-router-dom';
-import { setWeatherCurrentByPosition } from 'services/Store/reducers/weatherCurrent';
-import getWeatherByGeoLocation from 'services/requests/getWeatherByGeoLocation';
+import {
+  setWeatherCurrentByPosition,
+  setWeatherCurrentByCity,
+  setWeatherCurrentDisplayPosition,
+} from 'services/Store/reducers/weatherCurrent';
+import getCurrentWeatherLocation from 'services/requests/getCurrentWeatherLocation';
 import setCurrentPosition from 'services/Store/reducers/currentPosition/setCurrentPosition';
 import windSpeedEquiv from 'utils/windSpeedEquiv';
 import isObjEmpty from 'utils/isObjEmpty';
 import Paper from '@material-ui/core/Paper';
 import WeatherTemp from 'components/WeatherTemp';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import currentWeatherStyle from './style/currentWeatherStyle';
 
 export default connect((state) => {
   return {
     lat: state.currentPosition.lat,
     lon: state.currentPosition.lon,
-    didWeatherLoad: !isObjEmpty(state.weatherCurrent.byPosition),
+    choosedCity: state.currentCity.cityName,
+    forecastByCity: state.weatherCurrent.byCity,
+    forecastByPosition: state.weatherCurrent.byPosition,
+    forecastDisplayBy: state.weatherCurrent.displayBy,
   };
 })(
-  React.memo(({ lat, lon, didWeatherLoad, windInfoFlag }) => {
-    const classes = currentWeatherStyle();
-    const forecast = getState().weatherCurrent.byPosition;
-    const countryCode = (forecast.sys || {}).country;
+  React.memo(
+    ({
+      lat,
+      lon,
+      windInfoFlag,
+      choosedCity,
+      forecastByCity,
+      forecastByPosition,
+      forecastDisplayBy,
+    }) => {
+      const classes = currentWeatherStyle();
 
-    // const location = useLocation();
-    // const match = useRouteMatch();
-    // console.log(match);
-    // console.log(location);
+      const didWeatherByPositionLoad = !isObjEmpty(forecastByPosition);
+      const didWeatherByCityLoad = !isObjEmpty(forecastByCity);
 
-    // TODO: fixed duplicated func in MainPanel
-    React.useEffect(() => {
-      if (didWeatherLoad === false) {
-        if (lat !== null && lon !== null) {
-          (async () => {
-            const data = await getWeatherByGeoLocation(lat, lon);
-            setWeatherCurrentByPosition(data);
-          })();
-        } else {
-          setCurrentPosition();
-        }
+      console.log(forecastDisplayBy);
+
+      let forecast = {};
+      if (forecastDisplayBy === 'city' && didWeatherByCityLoad) {
+        forecast = forecastByCity;
+      } else if (forecastDisplayBy === 'position' && didWeatherByPositionLoad) {
+        forecast = forecastByPosition;
       }
-    }, [lat, lon, didWeatherLoad]);
+      // if (choosedCity !== null && didWeatherByCityLoad) {
+      //   forecast = forecastByCity;
+      // } else if (didWeatherByPositionLoad) {
+      //   forecast = forecastByPosition;
+      // }
 
-    return (
-      <Paper className={classes.root} variant='outlined'>
-        {didWeatherLoad && (
-          <>
-            <WeatherTemp
-              temp={forecast.main.temp}
-              icon={forecast.weather[0].icon}
-              width={50}
-              TypoStyle={'h5'}
-            />
+      React.useEffect(() => {
+        if (choosedCity === null) {
+          if (lat === null && lon === null) {
+            setCurrentPosition();
+          } else if (!didWeatherByPositionLoad) {
+            console.log('CURRENT WEATHER______USEEFFECT ASYNC');
+            (async () => {
+              const query = `lat=${lat}&lon=${lon}`;
+              const data = await getCurrentWeatherLocation(query);
+              setWeatherCurrentByPosition(data);
+            })();
+          }
+        } else {
+          setWeatherCurrentByCity(choosedCity);
+        }
+      }, [lat, lon, choosedCity, didWeatherByPositionLoad]);
 
-            <Typography variant='h6'>
-              {forecast.name}, {countryCode}
-            </Typography>
+      return (
+        <Paper className={classes.root} variant='outlined'>
+          {!isObjEmpty(forecast) && (
+            <>
+              <WeatherTemp
+                temp={forecast.main.temp}
+                icon={forecast.weather[0].icon}
+                width={50}
+                TypoStyle={'h5'}
+              />
 
-            {windInfoFlag && (
-              <Typography variant='subtitle1'>
-                {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s -{' '}
-                {windSpeedEquiv((forecast.wind || {}).speed)}
+              <Typography variant='h6'>
+                {forecast.name}, {forecast.sys.country}
               </Typography>
-            )}
-          </>
-        )}
-      </Paper>
-    );
-  })
+
+              {windInfoFlag && (
+                <Typography variant='subtitle1'>
+                  {forecast.weather[0].main}, {(forecast.wind || {}).speed} m/s
+                  - {windSpeedEquiv((forecast.wind || {}).speed)}
+                </Typography>
+              )}
+
+              <Button
+                size={'small'}
+                className={classes.btn}
+                onClick={() => setWeatherCurrentDisplayPosition()}
+                disabled={forecastDisplayBy === 'position'}
+              >
+                by coords
+              </Button>
+            </>
+          )}
+        </Paper>
+      );
+    }
+  )
 );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useRouteMatch } from 'react-router-dom';
+// import { useLocation, useRouteMatch } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import navData from './navData';
 import Button from '@material-ui/core/Button';
@@ -8,13 +8,11 @@ import navigationStyle from './style/navigationStyle';
 export default React.memo(() => {
   const classes = navigationStyle();
 
-  const location = useLocation();
-  const match = useRouteMatch();
+  // const location = useLocation();
 
-  React.useEffect(() => {
-    console.log('match', match);
-    console.log('location', location);
-  }, [location, match]);
+  // React.useEffect(() => {
+  //   console.log('location', location);
+  // }, [location]);
 
   return (
     <>

@@ -1,15 +1,14 @@
 import React from 'react';
-import { getState } from 'services/Store';
 import ForecastList from 'components/ForecastList';
 import getTime from 'utils/getTime';
 import Box from '@material-ui/core/Box';
 
-export default React.memo(() => {
-  const forecastByDays = getState().weatherFiveDays.listByDays;
+export default React.memo(({ forecast }) => {
+  const forecastToday = forecast.listByDays;
 
   return (
     <Box>
-      {forecastByDays.map((forecast) => {
+      {forecastToday.map((forecast) => {
         const date = getTime(forecast[0].dt, 'day and month');
         return (
           <ForecastList
