@@ -1,11 +1,11 @@
 import { getStore } from 'services/Store';
-import { CURRENT_POSITION_SET } from './currentPosition';
+import { CURRENT_LOCATION_POSITION_SET } from './currentLocation';
 
 export default async () => {
   const options = {
-    enableHighAccuracy: false,
+    enableHighAccuracy: true,
     timeout: 5000,
-    maximumAge: 0
+    maximumAge: 0,
   };
 
   function success(pos) {
@@ -13,7 +13,7 @@ export default async () => {
 
     const position = {
       lat: crd.latitude,
-      lon: crd.longitude
+      lon: crd.longitude,
     };
 
     handlerSetPosition(position);
@@ -28,7 +28,7 @@ export default async () => {
 
 function handlerSetPosition(payload) {
   getStore().dispatch({
-    type: CURRENT_POSITION_SET,
-    payload
+    type: CURRENT_LOCATION_POSITION_SET,
+    payload,
   });
 }

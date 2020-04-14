@@ -5,9 +5,9 @@ import {
   setWeatherFiveDaysByPosition,
   setWeatherFiveDaysByCity,
 } from 'services/Store/reducers/weatherFiveDays';
+import { setCurrentLocationPosition } from 'services/Store/reducers/currentLocation';
 import CurrentWeather from 'components/CurrentWeather';
 import getWeatherFiveDays from 'services/requests/getWeatherFiveDays';
-import setCurrentPosition from 'services/Store/reducers/currentPosition/setCurrentPosition';
 import isObjEmpty from 'utils/isObjEmpty';
 import Today from 'routes/Today';
 import Tomorrow from 'routes/Tomorrow';
@@ -18,9 +18,10 @@ import weatherForecastStyle from './style/weatherForecastStyle';
 
 export default connect((state) => {
   return {
-    lat: state.currentPosition.lat,
-    lon: state.currentPosition.lon,
-    choosedCity: state.currentCity.cityName,
+    lat: state.currentLocation.byPosition.lat,
+    lon: state.currentLocation.byPosition.lon,
+    choosedCity: state.currentLocation.byCity,
+    displayMode: state.currentLocation.displayBy,
     weatherFiveDaysByCity: state.weatherFiveDays.byCity,
     weatherFiveDaysByPosition: state.weatherFiveDays.byPosition,
   };
@@ -31,6 +32,7 @@ export default connect((state) => {
     choosedCity,
     weatherFiveDaysByCity,
     weatherFiveDaysByPosition,
+    displayMode,
   }) => {
     const classes = weatherForecastStyle();
 
@@ -40,17 +42,17 @@ export default connect((state) => {
     const weatherFiveDaysByCityLoad = !isObjEmpty(weatherFiveDaysByCity);
 
     let forecast = {};
-    const currentCity = ((forecast || {}).city || {}).name;
-    if (choosedCity !== null && weatherFiveDaysByCityLoad) {
+    if (displayMode === 'city' && weatherFiveDaysByCityLoad) {
       forecast = weatherFiveDaysByCity;
-    } else if (weatherFiveDaysByPositionLoad) {
+    } else if (displayMode === 'position' && weatherFiveDaysByPositionLoad) {
       forecast = weatherFiveDaysByPosition;
     }
+    const currentCity = ((forecast || {}).city || {}).name;
 
     React.useEffect(() => {
-      if (choosedCity === null) {
+      if (displayMode === 'position') {
         if (lat === null && lon === null) {
-          setCurrentPosition();
+          setCurrentLocationPosition();
         } else if (!weatherFiveDaysByPositionLoad) {
           (async () => {
             console.log('WEATHERFORECAST______USEEFFECT ASYNC BY POSITION');
@@ -59,7 +61,7 @@ export default connect((state) => {
             setWeatherFiveDaysByPosition(data);
           })();
         }
-      } else {
+      } else if (displayMode === 'city') {
         if (!weatherFiveDaysByCityLoad || currentCity !== choosedCity) {
           (async () => {
             console.log('WEATHERFORECAST______USEEFFECT ASYNC BY CITY');
@@ -76,6 +78,7 @@ export default connect((state) => {
       weatherFiveDaysByPositionLoad,
       weatherFiveDaysByCityLoad,
       currentCity,
+      displayMode,
     ]);
 
     return (

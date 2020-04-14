@@ -7,7 +7,6 @@ export default (
   state = {
     byPosition: {},
     byCity: {},
-    displayBy: 'position',
   },
   action
 ) => {
@@ -16,7 +15,6 @@ export default (
       return {
         ...state,
         byPosition: action.payload,
-        displayBy: 'position',
       };
     case WEATHER_CURRENT_SET_BY_CITY:
       return {
@@ -27,7 +25,6 @@ export default (
     case WEATHER_CURRENT_SET_DISPLAY_BY_POSITION:
       return {
         ...state,
-        displayBy: 'position',
       };
 
     default:

@@ -6,18 +6,20 @@ import {
   newStore,
   StoreProvider,
   citiesList,
-  currentPosition,
+  // currentPosition,
   weatherCurrent,
   weatherFiveDays,
-  currentCity,
+  // currentCity,
+  currentLocation,
 } from 'services/Store';
 
 newStore({
   citiesList,
-  currentPosition,
+  // currentPosition,
   weatherCurrent,
   weatherFiveDays,
-  currentCity,
+  // currentCity,
+  currentLocation,
 });
 
 ReactDOM.render(

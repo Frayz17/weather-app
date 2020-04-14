@@ -1,6 +1,6 @@
 import React from 'react';
 import WeatherTemp from 'components/WeatherTemp';
-import { currentCitySet } from 'services/Store/reducers/currentCity';
+import { setCurrentLocationCity } from 'services/Store/reducers/currentLocation';
 import { windSpeedEquiv } from 'utils';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -15,7 +15,7 @@ export default function City({ name, temp, windSpeed, weather, weatherIcon }) {
   const wind = roundNumber(windSpeed, 1);
 
   return (
-    <Card onClick={() => currentCitySet(name)} className={classes.root}>
+    <Card onClick={() => setCurrentLocationCity(name)} className={classes.root}>
       <CardActionArea>
         <CardContent>
           <Paper className={classes.forecastWrapper} variant='outlined'>
