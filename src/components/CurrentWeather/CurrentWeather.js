@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import DisplayModeToggler from 'components/DisplayModeToggler';
+import AddCityBtn from 'components/AddCityBtn';
 import {
   setWeatherCurrentByPosition,
   setWeatherCurrentByCity,
@@ -92,6 +93,7 @@ export default connect((state) => {
                 didWeatherByCityLoad={didWeatherByCityLoad}
                 didWeatherByPositionLoad={didWeatherByPositionLoad}
               />
+              <AddCityBtn />
             </>
           )}
         </Paper>

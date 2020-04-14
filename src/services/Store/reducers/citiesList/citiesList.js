@@ -1,37 +1,44 @@
-import { getStore } from 'services/Store';
-
-const CITIES_LIST_SET = 'CITIES_LIST_SET';
-const CITIES_LIST_UNSET = 'CITIES_LIST_UNSET';
-const CITIES_LIST_ADD_CITY = 'CITIES_LIST_ADD_CITY';
+const CITIES_LIST_FORECASTS_SET = 'CITIES_LIST_FORECASTS_SET';
+const CITIES_LIST_IDS_SET = 'CITIES_LIST_IDS_SET';
+const CITIES_LIST_ID_ADD = 'CITIES_LIST_ID_ADD';
 const CITIES_LIST_DELETE_CITY = 'CITIES_LIST_DELETE_CITY';
 
-export default (state = [], action) => {
+export default (
+  state = {
+    forecastsList: [],
+    IDsList: '',
+    // IDsList: '701822,2172797,636465,636804',
+  },
+  action
+) => {
   switch (action.type) {
-    case CITIES_LIST_SET:
-      return [...action.payload];
-    case CITIES_LIST_UNSET:
-      return [];
-    case CITIES_LIST_ADD_CITY:
-      return [...action.payload];
-    case CITIES_LIST_DELETE_CITY:
-      return [...action.payload];
+    case CITIES_LIST_FORECASTS_SET:
+      return {
+        ...state,
+        forecastsList: action.payload,
+      };
+    case CITIES_LIST_IDS_SET:
+      return {
+        ...state,
+        IDsList: action.payload,
+      };
+    case CITIES_LIST_ID_ADD:
+      return {
+        ...state,
+        IDsList: state.IDsList + action.payload,
+      };
+
+    // case CITIES_LIST_DELETE_CITY:
+    //   return [...action.payload];
 
     default:
-      return [...state];
+      return { ...state };
   }
 };
 
-function citiesListSet(payload) {
-  getStore().dispatch({
-    type: CITIES_LIST_SET,
-    payload
-  });
-}
-
 export {
-  CITIES_LIST_SET,
-  CITIES_LIST_UNSET,
-  CITIES_LIST_ADD_CITY,
+  CITIES_LIST_FORECASTS_SET,
+  CITIES_LIST_IDS_SET,
+  CITIES_LIST_ID_ADD,
   CITIES_LIST_DELETE_CITY,
-  citiesListSet
 };
