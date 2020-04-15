@@ -1,9 +1,9 @@
 import { getStore } from 'services/Store';
-import { CITIES_LIST_ID_ADD } from './citiesList';
+import { CITIES_LIST_ADD_ID } from './citiesList';
 
 const addCityIDsToReducer = (payload) => {
   getStore().dispatch({
-    type: CITIES_LIST_ID_ADD,
+    type: CITIES_LIST_ADD_ID,
     payload,
   });
 };
@@ -16,7 +16,8 @@ export default (cityID) => {
     myStorage.setItem('citiesIDList', `${cityID},`);
     addCityIDsToReducer(cityID);
   } else {
-    if (!getStorageList.split(',').includes(cityID)) {
+    const isCityIDSavedAlredy = getStorageList.split(',').includes(cityID);
+    if (!isCityIDSavedAlredy) {
       getStorageList += `${cityID},`;
       myStorage.setItem('citiesIDList', `${getStorageList}`);
       addCityIDsToReducer(cityID);

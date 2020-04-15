@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const cityStyle = makeStyles((theme) => ({
-  root: {},
+  root: {
+    position: 'relative',
+  },
   forecastWrapper: {
     display: 'flex',
     flexDirection: 'column',
