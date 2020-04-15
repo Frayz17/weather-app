@@ -44,6 +44,7 @@ export default connect((state) => {
             return (
               <City
                 key={id}
+                id={id}
                 name={name}
                 temp={temp}
                 windSpeed={wind.speed}

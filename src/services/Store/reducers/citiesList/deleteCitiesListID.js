@@ -15,7 +15,7 @@ export default (cityID) => {
   if (getStorageList != null) {
     const filteredIDs = getStorageList
       .split(',')
-      .filter((cityIDStorage) => cityIDStorage !== cityID)
+      .filter((cityIDStorage) => cityIDStorage !== cityID.toString())
       .join();
 
     myStorage.setItem('citiesIDList', `${filteredIDs}`);

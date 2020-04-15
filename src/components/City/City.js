@@ -11,7 +11,14 @@ import Paper from '@material-ui/core//Paper';
 import { roundNumber } from 'utils/';
 import cityStyle from './style/cityStyle';
 
-export default function City({ name, temp, windSpeed, weather, weatherIcon }) {
+export default function City({
+  id,
+  name,
+  temp,
+  windSpeed,
+  weather,
+  weatherIcon,
+}) {
   const classes = cityStyle();
   const wind = roundNumber(windSpeed, 1);
 
@@ -35,7 +42,7 @@ export default function City({ name, temp, windSpeed, weather, weatherIcon }) {
           </Paper>
         </CardContent>
       </CardActionArea>
-      <DeleteCityBtn />
+      <DeleteCityBtn id={id} />
     </Card>
   );
 }
